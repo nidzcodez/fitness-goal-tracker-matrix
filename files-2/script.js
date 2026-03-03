@@ -170,7 +170,7 @@ function addGlass() {
   let count = parseInt(localStorage.getItem('matrix_water')) || 0;
 
   if (count >= WATER_GOAL) {
-    showToast('🎉 Daily goal reached!');
+    showToast(' Daily goal reached!');
     return;
   }
 
@@ -179,9 +179,9 @@ function addGlass() {
   renderGlasses(count);
 
   if (count === WATER_GOAL) {
-    showToast('🎉 Hydration Goal Achieved!');
+    showToast(' Hydration Goal Achieved!');
   } else {
-    showToast('💧 Glass Added (' + count + '/' + WATER_GOAL + ')');
+    showToast(' Glass Added (' + count + '/' + WATER_GOAL + ')');
   }
 }
 
@@ -190,7 +190,7 @@ function addGlass() {
 function resetWater() {
   localStorage.setItem('matrix_water', 0);
   renderGlasses(0);
-  showToast('🔄 Water Tracker Reset');
+  showToast(' Water Tracker Reset');
 }
 
 
