@@ -1,0 +1,516 @@
+/* =============================================
+   MATRIX – Fitness Goal Tracker
+   style.css
+   Dark theme with neon green Matrix-inspired accents
+============================================= */
+
+/* ---- CSS Variables (change colors here) ---- */
+:root {
+  --bg-dark:      #0a0f0a;        /* main background */
+  --bg-card:      #0f1a0f;        /* card background */
+  --bg-input:     #0d150d;        /* input background */
+  --neon-green:   #00ff88;        /* primary neon accent */
+  --neon-dim:     #00cc6a;        /* dimmer neon */
+  --neon-blue:    #00d4ff;        /* water accent */
+  --neon-orange:  #ff8c00;        /* warning accent */
+  --neon-red:     #ff4444;        /* danger accent */
+  --text-primary: #e0ffe0;        /* main text */
+  --text-muted:   #5a8a5a;        /* muted / label text */
+  --border:       #1a3a1a;        /* card border */
+  --radius:       12px;
+  --shadow:       0 0 30px rgba(0, 255, 136, 0.06);
+}
+
+/* ---- Reset & Base ---- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  min-height: 100vh;
+  /* Subtle scan-line texture */
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 255, 136, 0.015) 2px,
+    rgba(0, 255, 136, 0.015) 4px
+  );
+}
+
+/* =============================================
+   HEADER
+============================================= */
+header {
+  position: relative;
+  text-align: center;
+  padding: 3rem 1rem 2.5rem;
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.header-inner {
+  position: relative;
+  z-index: 2;
+}
+
+/* Animated background grid */
+.header-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,255,136,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,136,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: gridMove 20s linear infinite;
+  z-index: 1;
+}
+
+@keyframes gridMove {
+  0%   { background-position: 0 0; }
+  100% { background-position: 40px 40px; }
+}
+
+/* Logo */
+.logo {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 900;
+  color: var(--neon-green);
+  text-shadow:
+    0 0 10px var(--neon-green),
+    0 0 40px rgba(0, 255, 136, 0.4);
+  letter-spacing: 0.3em;
+  animation: flicker 6s infinite;
+}
+
+.logo-bracket {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+@keyframes flicker {
+  0%, 92%, 94%, 96%, 100% { opacity: 1; }
+  93%, 95%                 { opacity: 0.85; }
+}
+
+.tagline {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-top: 0.5rem;
+}
+
+/* =============================================
+   MAIN LAYOUT
+============================================= */
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1.2rem 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* =============================================
+   CARDS
+============================================= */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.3s ease;
+  animation: fadeUp 0.6s ease both;
+}
+
+.card:hover {
+  box-shadow: 0 0 40px rgba(0, 255, 136, 0.1);
+}
+
+/* Staggered card entrance */
+#goals-section  { animation-delay: 0.1s; }
+#water-section  { animation-delay: 0.25s; }
+#bmi-section    { animation-delay: 0.4s; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Card Header */
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1rem;
+}
+
+.card-header h2 {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--neon-green);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.card-icon {
+  font-size: 1.4rem;
+}
+
+/* =============================================
+   FORM INPUTS
+============================================= */
+.input-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.input-group label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.input-group input {
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1rem;
+  padding: 0.6rem 0.9rem;
+  outline: none;
+  transition: border-color 0.25s, box-shadow 0.25s;
+  width: 100%;
+}
+
+.input-group input:focus {
+  border-color: var(--neon-green);
+  box-shadow: 0 0 12px rgba(0, 255, 136, 0.15);
+}
+
+.input-group input::placeholder {
+  color: #2a4a2a;
+}
+
+/* =============================================
+   BUTTONS
+============================================= */
+.btn {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.65rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.2s, background 0.2s;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background: var(--neon-green);
+  color: #000;
+  box-shadow: 0 0 14px rgba(0,255,136,0.3);
+}
+
+.btn-primary:hover {
+  background: #00ffaa;
+  box-shadow: 0 0 24px rgba(0,255,136,0.5);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--neon-green);
+  border: 1px solid var(--neon-green);
+}
+
+.btn-secondary:hover {
+  background: rgba(0,255,136,0.08);
+  box-shadow: 0 0 14px rgba(0,255,136,0.2);
+}
+
+.btn-danger {
+  background: transparent;
+  color: var(--neon-red);
+  border: 1px solid var(--neon-red);
+}
+
+.btn-danger:hover {
+  background: rgba(255,68,68,0.08);
+  box-shadow: 0 0 14px rgba(255,68,68,0.2);
+}
+
+.btn-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1.25rem;
+}
+
+/* =============================================
+   PROGRESS BARS
+============================================= */
+.progress-section {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.progress-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.progress-bar-wrap {
+  background: #0d1a0d;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  height: 10px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  border-radius: 100px;
+  background: linear-gradient(90deg, var(--neon-dim), var(--neon-green));
+  width: 0%;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 8px rgba(0,255,136,0.5);
+}
+
+.water-bar {
+  background: linear-gradient(90deg, #007baa, var(--neon-blue));
+  box-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+}
+
+/* Update section inside goals card */
+.update-section {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.update-section h3 {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+}
+
+/* =============================================
+   WATER TRACKER – GLASS ICONS
+============================================= */
+.water-glasses {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 1rem;
+}
+
+.glass {
+  width: 44px;
+  height: 56px;
+  border: 2px solid #1a3a4a;
+  border-radius: 4px 4px 8px 8px;
+  background: #0d1520;
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.glass.filled {
+  border-color: var(--neon-blue);
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+}
+
+.glass .fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 0%;
+  background: linear-gradient(180deg, rgba(0,212,255,0.5), rgba(0,123,170,0.9));
+  transition: height 0.5s ease;
+}
+
+.glass.filled .fill {
+  height: 100%;
+}
+
+.sub-info {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.sub-info strong {
+  color: var(--neon-blue);
+}
+
+/* =============================================
+   BMI CALCULATOR
+============================================= */
+.bmi-result {
+  margin-top: 1.5rem;
+  text-align: center;
+  animation: fadeUp 0.4s ease;
+}
+
+.bmi-value {
+  font-family: 'Orbitron', monospace;
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: var(--neon-green);
+  text-shadow: 0 0 20px rgba(0,255,136,0.4);
+  line-height: 1;
+  margin-bottom: 0.3rem;
+}
+
+.bmi-category {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+/* Color variants for BMI category */
+.bmi-category.underweight { color: var(--neon-blue); }
+.bmi-category.normal      { color: var(--neon-green); }
+.bmi-category.overweight  { color: var(--neon-orange); }
+.bmi-category.obese       { color: var(--neon-red); }
+
+/* BMI Scale */
+.bmi-scale {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.scale-bar {
+  height: 12px;
+  border-radius: 100px;
+  background: linear-gradient(90deg,
+    var(--neon-blue) 0%,
+    var(--neon-green) 30%,
+    var(--neon-orange) 65%,
+    var(--neon-red) 100%
+  );
+  position: relative;
+  margin-bottom: 0.6rem;
+}
+
+.scale-indicator {
+  position: absolute;
+  top: -5px;
+  width: 4px;
+  height: 22px;
+  background: #fff;
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(255,255,255,0.8);
+  transform: translateX(-50%);
+  transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  left: 0%;
+}
+
+.scale-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+/* =============================================
+   FOOTER
+============================================= */
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  border-top: 1px solid var(--border);
+}
+
+/* =============================================
+   TOAST NOTIFICATION
+============================================= */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--bg-card);
+  border: 1px solid var(--neon-green);
+  color: var(--neon-green);
+  font-family: 'Orbitron', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0,255,136,0.25);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  z-index: 999;
+  white-space: nowrap;
+}
+
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* =============================================
+   RESPONSIVE – Mobile
+============================================= */
+@media (max-width: 600px) {
+  .card { padding: 1.4rem; }
+  .logo { letter-spacing: 0.15em; }
+  .input-grid { grid-template-columns: 1fr; }
+  .btn-row { flex-direction: column; }
+  .btn { width: 100%; text-align: center; }
+}

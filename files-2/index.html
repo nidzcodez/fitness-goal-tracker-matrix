@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Matrix – Fitness Goal Tracker</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-bracket">[</span>
+        MATRIX
+        <span class="logo-bracket">]</span>
+      </div>
+      <p class="tagline">Your Personal Fitness Intelligence System</p>
+    </div>
+    <!-- Animated grid lines in background -->
+    <div class="header-grid"></div>
+  </header>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main>
+
+    <!-- ==============================
+         SECTION 1: FITNESS GOALS
+    =============================== -->
+    <section class="card" id="goals-section">
+      <div class="card-header">
+        <span class="card-icon">🎯</span>
+        <h2>Daily Fitness Goals</h2>
+      </div>
+
+      <!-- Goal input fields -->
+      <div class="input-grid">
+        <div class="input-group">
+          <label for="steps-input">Steps Goal</label>
+          <input type="number" id="steps-input" placeholder="e.g. 10000" min="0" />
+        </div>
+        <div class="input-group">
+          <label for="calories-input">Calories Goal (kcal)</label>
+          <input type="number" id="calories-input" placeholder="e.g. 2000" min="0" />
+        </div>
+        <div class="input-group">
+          <label for="workout-input">Workout Minutes</label>
+          <input type="number" id="workout-input" placeholder="e.g. 45" min="0" />
+        </div>
+      </div>
+
+      <button class="btn btn-primary" onclick="saveGoals()">💾 Save Goals</button>
+
+      <!-- Progress bars for each goal -->
+      <div class="progress-section" id="progress-section">
+        <!-- Steps Progress -->
+        <div class="progress-item">
+          <div class="progress-label">
+            <span>Steps</span>
+            <span id="steps-pct">0%</span>
+          </div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar" id="steps-bar"></div>
+          </div>
+        </div>
+
+        <!-- Calories Progress -->
+        <div class="progress-item">
+          <div class="progress-label">
+            <span>Calories</span>
+            <span id="calories-pct">0%</span>
+          </div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar" id="calories-bar"></div>
+          </div>
+        </div>
+
+        <!-- Workout Progress -->
+        <div class="progress-item">
+          <div class="progress-label">
+            <span>Workout Minutes</span>
+            <span id="workout-pct">0%</span>
+          </div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar" id="workout-bar"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actual progress update inputs -->
+      <div class="update-section">
+        <h3>Update Today's Progress</h3>
+        <div class="input-grid">
+          <div class="input-group">
+            <label for="steps-actual">Steps Done</label>
+            <input type="number" id="steps-actual" placeholder="e.g. 6000" min="0" />
+          </div>
+          <div class="input-group">
+            <label for="calories-actual">Calories Burned</label>
+            <input type="number" id="calories-actual" placeholder="e.g. 800" min="0" />
+          </div>
+          <div class="input-group">
+            <label for="workout-actual">Minutes Worked Out</label>
+            <input type="number" id="workout-actual" placeholder="e.g. 30" min="0" />
+          </div>
+        </div>
+        <button class="btn btn-secondary" onclick="updateProgress()">📊 Update Progress</button>
+      </div>
+    </section>
+
+
+    <!-- ==============================
+         SECTION 2: WATER INTAKE
+    =============================== -->
+    <section class="card" id="water-section">
+      <div class="card-header">
+        <span class="card-icon">💧</span>
+        <h2>Water Intake Tracker</h2>
+      </div>
+
+      <p class="sub-info">Goal: <strong>8 glasses</strong> per day</p>
+
+      <!-- Water glass buttons -->
+      <div class="water-glasses" id="water-glasses">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Water progress bar -->
+      <div class="progress-item" style="margin-top:1.5rem;">
+        <div class="progress-label">
+          <span>Hydration Level</span>
+          <span id="water-pct">0 / 8 glasses</span>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar water-bar" id="water-bar"></div>
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="addGlass()">+ Add Glass</button>
+        <button class="btn btn-danger" onclick="resetWater()">🔄 Reset</button>
+      </div>
+    </section>
+
+
+    <!-- ==============================
+         SECTION 3: BMI CALCULATOR
+    =============================== -->
+    <section class="card" id="bmi-section">
+      <div class="card-header">
+        <span class="card-icon">⚖️</span>
+        <h2>BMI Calculator</h2>
+      </div>
+
+      <div class="input-grid">
+        <div class="input-group">
+          <label for="height-input">Height (cm)</label>
+          <input type="number" id="height-input" placeholder="e.g. 170" min="50" max="300" />
+        </div>
+        <div class="input-group">
+          <label for="weight-input">Weight (kg)</label>
+          <input type="number" id="weight-input" placeholder="e.g. 65" min="10" max="500" />
+        </div>
+      </div>
+
+      <button class="btn btn-primary" onclick="calculateBMI()">⚡ Calculate BMI</button>
+
+      <!-- BMI Result Box (hidden until calculated) -->
+      <div class="bmi-result" id="bmi-result" style="display:none;">
+        <div class="bmi-value" id="bmi-value">--</div>
+        <div class="bmi-category" id="bmi-category">--</div>
+        <div class="bmi-scale">
+          <div class="scale-bar">
+            <div class="scale-indicator" id="scale-indicator"></div>
+          </div>
+          <div class="scale-labels">
+            <span>Underweight</span>
+            <span>Normal</span>
+            <span>Overweight</span>
+            <span>Obese</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <p>MATRIX &copy; 2025 &mdash; Fitness Intelligence System &mdash; Built with HTML, CSS & JS</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
